@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width,minimum-scale=1,initial-scale=1,maximum-scale=1,user-scalable=1;" name="viewport" />
+    <!--指定的iphone中safari顶端的状态条的样式-->
+    <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+    <!--告诉设备忽略将页面中的数字识别为电话号码-->
+    <meta content="telephone=no" name="format-detection" />
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="js/jquery.js"></script>
+    <script type="text/javascript" src="generic/build/pdf.js"></script>
+</head>
+<body>
+<canvas id="canvas"></canvas>
+<script>
+var url = 'http://xinet.duobaodai.com/old_pdf/151635381628312151.pdf';
+PDFJS.workerSrc = 'generic/build/pdf.worker.js';
+PDFJS.getDocument(url).then(function getPdf(pdf) {
+pdf.getPage(2).then(function getPage(page) {
+var scale = 1;
+var viewport = page.getViewport(scale);
+var canvas = document.getElementById('canvas');
+var context = canvas.getContext('2d');
+canvas.height = viewport.height;
+canvas.width = viewport.width;
+var renderContext = {
+canvasContext: context,
+viewport: viewport
+};
+page.render(renderContext);
+});
+});
+</script>
+</body>
+</html>
